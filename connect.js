@@ -34,7 +34,7 @@ function showTheCurrentPlayer(currentPlayer) {
     ctx.fillStyle = "blue"
     ctx.fillRect(0, 0, theCurrentPlayer.width, theCurrentPlayer.height)
     let region = new Path2D()
-    region.arc(HUNDRED, HUNDRED, FIFTY, 0, Math.PI * 2)
+    region.arc(hundred, hundred, fifty, 0, Math.PI * 2)
     ctx.fillStyle = "red"
     ctx.fill(region)
     ctx.fillStyle = "black"
@@ -50,7 +50,7 @@ function showTheCurrentPlayer(currentPlayer) {
 }
 
 let frequency = new Array(7).fill(0)
-let HUNDRED = 100, FIFTY = 50, radius = 45
+let hundred = 100, fifty = 50, radius = 45
 
 function clickOnCanvas(event) {
     ++currentPlayer
@@ -64,14 +64,14 @@ function clickOnCanvas(event) {
     }
     if (currentPlayer % 2 == 0) {
         region = new Path2D()
-        region.arc(x1 * HUNDRED + FIFTY, 600 - (frequency[x1] * HUNDRED + FIFTY), radius, 0, Math.PI * 2)
+        region.arc(x1 * hundred + fifty, 600 - (frequency[x1] * hundred + fifty), radius, 0, Math.PI * 2)
         ctx.fillStyle = "red"
         ctx.fill(region)
         frequency[x1] += 1
         gameBoard[y1][x1] = 0
     } else if (currentPlayer % 2 != 0) {
         region = new Path2D()
-        region.arc(x1 * HUNDRED + FIFTY, 600 - (frequency[x1] * HUNDRED + FIFTY), radius, 0, Math.PI * 2)
+        region.arc(x1 * hundred + fifty, 600 - (frequency[x1] * hundred + fifty), radius, 0, Math.PI * 2)
         ctx.fillStyle = "purple"
         ctx.fill(region)
         frequency[x1] += 1
@@ -106,7 +106,7 @@ function checkLines(y1, x1) {
     while (showTheWiner) {
         let ctx = canvas.getContext("2d")
         let region = new Path2D()
-        region.arc(xPosition * HUNDRED + FIFTY, 600 - ((frequency[x1] - 1) * HUNDRED + FIFTY), radius, 0, Math.PI * 2)
+        region.arc(xPosition * hundred + fifty, 600 - ((frequency[x1] - 1) * hundred + fifty), radius, 0, Math.PI * 2)
         ctx.filter = "drop-shadow(-9px 9px 6px white)"
         ctx.fill(region)
         --showTheWiner
@@ -131,7 +131,7 @@ function checkColumn(x1) {
     while (showTheWiner) {
         let ctx = canvas.getContext("2d")
         let region = new Path2D()
-        region.arc(x1 * HUNDRED + FIFTY, yPosition * HUNDRED + FIFTY, radius, 0, Math.PI * 2)
+        region.arc(x1 * hundred + fifty, yPosition * hundred + fifty, radius, 0, Math.PI * 2)
         ctx.filter = "drop-shadow(-9px 9px 6px white)"
         ctx.fill(region)
         --showTheWiner
@@ -164,7 +164,7 @@ function checkMainDiagonals(x1, y1) {
     while (showTheWiner) {
         let ctx = canvas.getContext("2d")
         let region = new Path2D()
-        region.arc(xPosition * HUNDRED + FIFTY, yPosition * HUNDRED + FIFTY, radius, 0, Math.PI * 2)
+        region.arc(xPosition * hundred + fifty, yPosition * hundred + fifty, radius, 0, Math.PI * 2)
         ctx.filter = "drop-shadow(-9px 9px 6px white)"
         ctx.fill(region)
         --xPosition
@@ -198,7 +198,7 @@ function checkSecondaryDiagonals(x1, y1) {
     while (showTheWiner) {
         let ctx = canvas.getContext("2d")
         let region = new Path2D()
-        region.arc(xPosition * HUNDRED + FIFTY, yPosition * HUNDRED + FIFTY, radius, 0, Math.PI * 2)
+        region.arc(xPosition * hundred + fifty, yPosition * hundred + fifty, radius, 0, Math.PI * 2)
         ctx.filter = "drop-shadow(-9px 9px 6px white)"
         ctx.fill(region)
         ++xPosition
