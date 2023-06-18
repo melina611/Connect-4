@@ -12,14 +12,14 @@ function drawCircles() {
             gameBoard[i][j] = -1
             x += xAxis
             let region = new Path2D()
-            region.arc(x, y, 45, 0, Math.PI * 2)
+            region.arc(x, y, radius, 0, Math.PI * 2)
             ctx.fillStyle = "white"
             ctx.fill(region)
             xAxis = 100
         }
         yAxis = 100
     }
-    setTheCurrentPlayer(currentPlayer)
+    showTheCurrentPlayer(currentPlayer)
     canvas.addEventListener("click", clickOnCanvas)
 }
 
@@ -28,13 +28,13 @@ let row = 6
 let column = 7
 let currentPlayer = -1
 
-function setTheCurrentPlayer(currentPlayer) {
+function showTheCurrentPlayer(currentPlayer) {
     let theCurrentPlayer = document.getElementById("theCurrentPlayer")
     let ctx = theCurrentPlayer.getContext("2d")
     ctx.fillStyle = "blue"
     ctx.fillRect(0, 0, theCurrentPlayer.width, theCurrentPlayer.height)
     let region = new Path2D()
-    region.arc(100, 100, 50, 0, Math.PI * 2)
+    region.arc(HUNDRED, HUNDRED, FIFTY, 0, Math.PI * 2)
     ctx.fillStyle = "red"
     ctx.fill(region)
     ctx.fillStyle = "black"
@@ -50,6 +50,7 @@ function setTheCurrentPlayer(currentPlayer) {
 }
 
 let frequency = new Array(7).fill(0)
+let HUNDRED = 100, FIFTY = 50, radius = 45
 
 function clickOnCanvas(event) {
     ++currentPlayer
@@ -63,14 +64,14 @@ function clickOnCanvas(event) {
     }
     if (currentPlayer % 2 == 0) {
         region = new Path2D()
-        region.arc(x1 * 100 + 50, 600 - (frequency[x1] * 100 + 50), 45, 0, Math.PI * 2)
+        region.arc(x1 * HUNDRED + FIFTY, 600 - (frequency[x1] * HUNDRED + FIFTY), radius, 0, Math.PI * 2)
         ctx.fillStyle = "red"
         ctx.fill(region)
         frequency[x1] += 1
         gameBoard[y1][x1] = 0
     } else if (currentPlayer % 2 != 0) {
         region = new Path2D()
-        region.arc(x1 * 100 + 50, 600 - (frequency[x1] * 100 + 50), 45, 0, Math.PI * 2)
+        region.arc(x1 * HUNDRED + FIFTY, 600 - (frequency[x1] * HUNDRED + FIFTY), radius, 0, Math.PI * 2)
         ctx.fillStyle = "purple"
         ctx.fill(region)
         frequency[x1] += 1
@@ -81,7 +82,7 @@ function clickOnCanvas(event) {
     } else if (currentPlayer % 2 != 0 && gameBoard[y1][x1] == 0) {
         --currentPlayer
     }
-    setTheCurrentPlayer(currentPlayer)
+    showTheCurrentPlayer(currentPlayer)
     checkLines(y1, x1)
     checkColumn(x1)
     checkMainDiagonals(x1, y1)
@@ -105,7 +106,7 @@ function checkLines(y1, x1) {
     while (showTheWiner) {
         let ctx = canvas.getContext("2d")
         let region = new Path2D()
-        region.arc(xPosition * 100 + 50, 600 - ((frequency[x1] - 1) * 100 + 50), 45, 0, Math.PI * 2)
+        region.arc(xPosition * HUNDRED + FIFTY, 600 - ((frequency[x1] - 1) * HUNDRED + FIFTY), radius, 0, Math.PI * 2)
         ctx.filter = "drop-shadow(-9px 9px 6px white)"
         ctx.fill(region)
         --showTheWiner
@@ -130,7 +131,7 @@ function checkColumn(x1) {
     while (showTheWiner) {
         let ctx = canvas.getContext("2d")
         let region = new Path2D()
-        region.arc(x1 * 100 + 50, yPosition * 100 + 50, 45, 0, Math.PI * 2)
+        region.arc(x1 * HUNDRED + FIFTY, yPosition * HUNDRED + FIFTY, radius, 0, Math.PI * 2)
         ctx.filter = "drop-shadow(-9px 9px 6px white)"
         ctx.fill(region)
         --showTheWiner
@@ -163,7 +164,7 @@ function checkMainDiagonals(x1, y1) {
     while (showTheWiner) {
         let ctx = canvas.getContext("2d")
         let region = new Path2D()
-        region.arc(xPosition * 100 + 50, yPosition * 100 + 50, 45, 0, Math.PI * 2)
+        region.arc(xPosition * HUNDRED + FIFTY, yPosition * HUNDRED + FIFTY, radius, 0, Math.PI * 2)
         ctx.filter = "drop-shadow(-9px 9px 6px white)"
         ctx.fill(region)
         --xPosition
@@ -197,7 +198,7 @@ function checkSecondaryDiagonals(x1, y1) {
     while (showTheWiner) {
         let ctx = canvas.getContext("2d")
         let region = new Path2D()
-        region.arc(xPosition * 100 + 50, yPosition * 100 + 50, 45, 0, Math.PI * 2)
+        region.arc(xPosition * HUNDRED + FIFTY, yPosition * HUNDRED + FIFTY, radius, 0, Math.PI * 2)
         ctx.filter = "drop-shadow(-9px 9px 6px white)"
         ctx.fill(region)
         ++xPosition
