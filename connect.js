@@ -50,7 +50,7 @@ function showTheCurrentPlayer(currentPlayer) {
 }
 
 let frequency = new Array(7).fill(0)
-let hundred = 100, fifty = 50, radius = 45
+let hundred = 100, fifty = 50, radius = 45, canvasHeight = 600
 
 function clickOnCanvas(event) {
     ++currentPlayer
@@ -59,19 +59,19 @@ function clickOnCanvas(event) {
     let x = event.pageX - elemLeft
     let x1 = Math.floor(x / 100),
         y1 = 5 - frequency[x1]
-    if (frequency[x1] + 1 > 6) {
+    if (frequency[x1] + 1 > row) {
         return
     }
     if (currentPlayer % 2 == 0) {
         region = new Path2D()
-        region.arc(x1 * hundred + fifty, 600 - (frequency[x1] * hundred + fifty), radius, 0, Math.PI * 2)
+        region.arc(x1 * hundred + fifty, canvasHeight - (frequency[x1] * hundred + fifty), radius, 0, Math.PI * 2)
         ctx.fillStyle = "red"
         ctx.fill(region)
         frequency[x1] += 1
         gameBoard[y1][x1] = 0
     } else if (currentPlayer % 2 != 0) {
         region = new Path2D()
-        region.arc(x1 * hundred + fifty, 600 - (frequency[x1] * hundred + fifty), radius, 0, Math.PI * 2)
+        region.arc(x1 * hundred + fifty, canvasHeight - (frequency[x1] * hundred + fifty), radius, 0, Math.PI * 2)
         ctx.fillStyle = "purple"
         ctx.fill(region)
         frequency[x1] += 1
@@ -94,7 +94,7 @@ function checkLines(y1, x1) {
     for (let i = 0; i < column; ++i) {
         if (gameBoard[y1][i] == gameBoard[y1][i + 1] && gameBoard[y1][i] != -1) {
             ++winerOnTheLines
-            if (winerOnTheLines == 4 || winerOnTheLines == 7) {
+            if (winerOnTheLines == 4 || winerOnTheLines == column) {
                 xPosition = i + 1
                 showTheWiner = winerOnTheLines
             }
@@ -106,7 +106,7 @@ function checkLines(y1, x1) {
     while (showTheWiner) {
         let ctx = canvas.getContext("2d")
         let region = new Path2D()
-        region.arc(xPosition * hundred + fifty, 600 - ((frequency[x1] - 1) * hundred + fifty), radius, 0, Math.PI * 2)
+        region.arc(xPosition * hundred + fifty, canvasHeight - ((frequency[x1] - 1) * hundred + fifty), radius, 0, Math.PI * 2)
         ctx.filter = "drop-shadow(-9px 9px 6px white)"
         ctx.fill(region)
         --showTheWiner
@@ -120,7 +120,7 @@ function checkColumn(x1) {
     for (let i = row - 1; i > 0; --i) {
         if (gameBoard[i - 1][x1] == gameBoard[i][x1] && gameBoard[i][x1] != -1) {
             ++winerFromTheColumns
-            if (winerFromTheColumns == 4 || winerFromTheColumns == 6) {
+            if (winerFromTheColumns == 4 || winerFromTheColumns == row) {
                 showTheWiner = winerFromTheColumns
                 yPosition = i - 1
             }
@@ -150,7 +150,7 @@ function checkMainDiagonals(x1, y1) {
     while (copyX1 != 6 && copyY1 != 5) {
         if (gameBoard[copyY1][copyX1] == gameBoard[copyY1 + 1][copyX1 + 1] && gameBoard[copyY1][copyX1] != -1) {
             ++winerOnTheMainDiagonals
-            if (winerOnTheMainDiagonals == 4 || (winerOnTheMainDiagonals == 5 && (copyY1 + 2 == 6 || copyX1 + 2 == 7)) || (winerOnTheMainDiagonals == 6 && (copyX1 + 2 == 7 || copyY1 + 2 == 6))) {
+            if (winerOnTheMainDiagonals == 4 || (winerOnTheMainDiagonals == 5 && (copyY1 + 2 == row || copyX1 + 2 == column)) || (winerOnTheMainDiagonals == 6 && (copyX1 + 2 == column || copyY1 + 2 == row))) {
                 xPosition = copyX1 + 1,
                     yPosition = copyY1 + 1
                 showTheWiner = winerOnTheMainDiagonals
@@ -184,7 +184,7 @@ function checkSecondaryDiagonals(x1, y1) {
     while (copyX1 != 0 && copyY1 != 5) {
         if (gameBoard[copyY1][copyX1] == gameBoard[copyY1 + 1][copyX1 - 1] && gameBoard[copyY1][copyX1] != -1) {
             ++winerOnTheSecondDiagonals
-            if (winerOnTheSecondDiagonals == 4 || (winerOnTheSecondDiagonals == 5 && (copyY1 + 2 == 6 || copyX1 - 2 == -1)) || (winerOnTheSecondDiagonals == 6 && (copyX1 - 2 == -1 || copyY1 + 2 == 6))) {
+            if (winerOnTheSecondDiagonals == 4 || (winerOnTheSecondDiagonals == 5 && (copyY1 + 2 == row || copyX1 - 2 == -1)) || (winerOnTheSecondDiagonals == 6 && (copyX1 - 2 == -1 || copyY1 + 2 == row))) {
                 xPosition = copyX1 - 1,
                     yPosition = copyY1 + 1
                 showTheWiner = winerOnTheSecondDiagonals
