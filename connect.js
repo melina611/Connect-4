@@ -57,8 +57,8 @@ function clickOnCanvas(event) {
     ctx = canvas.getContext("2d")
     let elemLeft = canvas.offsetLeft
     let x = event.pageX - elemLeft
-    let x1 = Math.floor(x / 100),
-        y1 = 5 - frequency[x1]
+    let x1 = Math.floor(x / hundred),
+        y1 = (row - 1) - frequency[x1]
     if (frequency[x1] + 1 > row) {
         return
     }
@@ -89,12 +89,14 @@ function clickOnCanvas(event) {
     checkSecondaryDiagonals(x1, y1)
 }
 
+let connectFour = 4
+
 function checkLines(y1, x1) {
     let winerOnTheLines = 1, showTheWiner = 0, xPosition = 0
     for (let i = 0; i < column; ++i) {
         if (gameBoard[y1][i] == gameBoard[y1][i + 1] && gameBoard[y1][i] != -1) {
             ++winerOnTheLines
-            if (winerOnTheLines == 4 || winerOnTheLines == column) {
+            if (winerOnTheLines == connectFour || winerOnTheLines == column) {
                 xPosition = i + 1
                 showTheWiner = winerOnTheLines
             }
@@ -120,7 +122,7 @@ function checkColumn(x1) {
     for (let i = row - 1; i > 0; --i) {
         if (gameBoard[i - 1][x1] == gameBoard[i][x1] && gameBoard[i][x1] != -1) {
             ++winerFromTheColumns
-            if (winerFromTheColumns == 4 || winerFromTheColumns == row) {
+            if (winerFromTheColumns == connectFour || winerFromTheColumns == row) {
                 showTheWiner = winerFromTheColumns
                 yPosition = i - 1
             }
@@ -147,10 +149,10 @@ function checkMainDiagonals(x1, y1) {
         --copyX1
         --copyY1
     }
-    while (copyX1 != 6 && copyY1 != 5) {
+    while (copyX1 != column - 1 && copyY1 != row - 1) {
         if (gameBoard[copyY1][copyX1] == gameBoard[copyY1 + 1][copyX1 + 1] && gameBoard[copyY1][copyX1] != -1) {
             ++winerOnTheMainDiagonals
-            if (winerOnTheMainDiagonals == 4 || (winerOnTheMainDiagonals == 5 && (copyY1 + 2 == row || copyX1 + 2 == column)) || (winerOnTheMainDiagonals == 6 && (copyX1 + 2 == column || copyY1 + 2 == row))) {
+            if (winerOnTheMainDiagonals == connectFour || (winerOnTheMainDiagonals == row - 1 && (copyY1 + 2 == row || copyX1 + 2 == column)) || (winerOnTheMainDiagonals == column - 1 && (copyX1 + 2 == column || copyY1 + 2 == row))) {
                 xPosition = copyX1 + 1,
                     yPosition = copyY1 + 1
                 showTheWiner = winerOnTheMainDiagonals
@@ -177,14 +179,14 @@ function checkMainDiagonals(x1, y1) {
 function checkSecondaryDiagonals(x1, y1) {
     let winerOnTheSecondDiagonals = 1, copyX1 = x1, copyY1 = y1
     let xPosition = 0, yPosition = 0, showTheWiner = 0
-    while (copyX1 != 6 && copyY1 != 0) {
+    while (copyX1 != column - 1 && copyY1 != 0) {
         --copyY1
         ++copyX1
     }
-    while (copyX1 != 0 && copyY1 != 5) {
+    while (copyX1 != 0 && copyY1 != row - 1) {
         if (gameBoard[copyY1][copyX1] == gameBoard[copyY1 + 1][copyX1 - 1] && gameBoard[copyY1][copyX1] != -1) {
             ++winerOnTheSecondDiagonals
-            if (winerOnTheSecondDiagonals == 4 || (winerOnTheSecondDiagonals == 5 && (copyY1 + 2 == row || copyX1 - 2 == -1)) || (winerOnTheSecondDiagonals == 6 && (copyX1 - 2 == -1 || copyY1 + 2 == row))) {
+            if (winerOnTheSecondDiagonals == connectFour || (winerOnTheSecondDiagonals == row - 1 && (copyY1 + 2 == row || copyX1 - 2 == -1)) || (winerOnTheSecondDiagonals == column - 1 && (copyX1 - 2 == -1 || copyY1 + 2 == row))) {
                 xPosition = copyX1 - 1,
                     yPosition = copyY1 + 1
                 showTheWiner = winerOnTheSecondDiagonals
